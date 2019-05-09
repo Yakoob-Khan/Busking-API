@@ -4,10 +4,10 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import * as Polls from './controllers/poll_controller';
+import * as Events from './controllers/event_controller';
 
 // DB Setup
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/cs52poll';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/buskingEvent';
 mongoose.connect(mongoURI, { useNewUrlParser: true });
 // set mongoose promises to es6 default
 mongoose.Promise = global.Promise;
@@ -38,8 +38,8 @@ app.use(bodyParser.json());
 
 // default index route
 app.get('/', (req, res) => {
-  Polls.getPolls().then((polls) => {
-    res.render('index', { polls });
+  Events.getEvents().then((event) => {
+    res.render('index', { event });
   }).catch((error) => {
     res.send(`error: ${error}`);
   });
@@ -50,18 +50,21 @@ app.get('/new', (req, res) => {
 })
 
 app.post('/new', (req, res) => {
-  const newpoll = {
-    text: req.body.text,
+  const newEvent = {
+    title : req.body.title,
     imageURL: req.body.imageURL,
+    longitude : req.body.longitude,
+    latitude : req.body.latitude,
+    eventCreator : req.body.eventCreator
   };
-  Polls.createPoll(newpoll).then((poll) => {
+  Events.createEvent(newEvent).then((event) => {
     res.redirect('/');
   });
 })
 
 app.post('/vote/:id', (req, res) => {
   const vote = (req.body.vote === 'up');// convert to bool
-  Polls.vote(req.params.id, vote).then((result) => {
+  Events.vote(req.params.id, vote).then((result) => {
     res.send(result);
   });
 })
