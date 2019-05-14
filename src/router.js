@@ -47,9 +47,9 @@ router.route('/events/:id')
 //   });
 // });
 
-router.post('/events/vote/:id', (req, res) => {
-  const vote = (req.body.vote === 'up');// convert to bool
-  Events.vote(req.params.id, vote).then((result) => {
+router.post('/events/rate/:id', (req, res) => {
+  const { rating } = req.body;
+  Events.rateEvent(req.params.id, rating).then((result) => {
     res.send(result);
   });
 });

@@ -62,18 +62,11 @@ export const updateEvent = (req, res) => {
     });
 };
 
-
-export const vote = (eventId, upvote) => {
-  // takes in the event id to update and a boolean of whether
-  // to update or not.
-  // returns a promise
+export const rateEvent = (eventId, rating) => {
   return Event.findOne({ _id: eventId }).then((event) => {
-    console.log(`updating vote: ${event} ${upvote}`);
-    if (upvote) {
-      event.upvotes += 1;
-    } else {
-      event.downvotes += 1;
-    }
+    console.log(`updating vote: ${event} ${rating}`);
+    event.averageRating = (event.averageRating * event.numberOfRatings + rating) / (event.numberOfRatings + 1);
+    event.numberOfRatings += 1;
     return event.save();
   });
 };

@@ -3,8 +3,8 @@ import mongoose, { Schema } from 'mongoose';
 const EventSchema = new Schema({
   title: String,
   imageURL: String,
-  upvotes: { type: Number, default: 0 },
-  downvotes: { type: Number, default: 0 },
+  averageRating: { type: Number, default: 0 },
+  numberOfRatings: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
   eventCreator: String,
