@@ -3,14 +3,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
+// at top of server.js
 import mongoose from 'mongoose';
-import * as Events from './controllers/event_controller';
-
-// DB Setup
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/buskingEvent';
-mongoose.connect(mongoURI, { useNewUrlParser: true });
-// set mongoose promises to es6 default
-mongoose.Promise = global.Promise;
+import apiRouter from './router';
 
 // initialize
 const app = express();
@@ -34,40 +29,17 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// REGISTER OUR ROUTES -------------------------------
+// all of our routes will be prefixed with /api
+// this should go AFTER body parser
+app.use('/api', apiRouter);
+
 // additional init stuff should go before hitting the routing
 
 // default index route
 app.get('/', (req, res) => {
-  Events.getEvents().then((event) => {
-    res.render('index', { event });
-  }).catch((error) => {
-    res.send(`error: ${error}`);
-  });
+  res.send('hi');
 });
-
-app.get('/new', (req, res) => {
-  res.render('new');
-})
-
-app.post('/new', (req, res) => {
-  const newEvent = {
-    title : req.body.title,
-    imageURL: req.body.imageURL,
-    longitude : req.body.longitude,
-    latitude : req.body.latitude,
-    eventCreator : req.body.eventCreator
-  };
-  Events.createEvent(newEvent).then((event) => {
-    res.redirect('/');
-  });
-})
-
-app.post('/vote/:id', (req, res) => {
-  const vote = (req.body.vote === 'up');// convert to bool
-  Events.vote(req.params.id, vote).then((result) => {
-    res.send(result);
-  });
-})
 
 // START THE SERVER
 // =============================================================================
@@ -75,3 +47,9 @@ const port = process.env.PORT || 9090;
 app.listen(port);
 
 console.log(`listening on: ${port}`);
+
+// DB Setup
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
+mongoose.connect(mongoURI);
+// set mongoose promises to es6 default
+mongoose.Promise = global.Promise;
