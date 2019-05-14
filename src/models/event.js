@@ -7,12 +7,12 @@ const EventSchema = new Schema({
   downvotes: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
-  eventCreator: String
+  eventCreator: String,
 }, {
-    toJSON: {
-      virtuals: true,
-    },
-  });
+  toJSON: {
+    virtuals: true,
+  },
+});
 
 EventSchema.virtual('score').get(function scoreCalc() {
   return this.upvotes - this.downvotes;
