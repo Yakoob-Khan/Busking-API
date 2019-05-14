@@ -30,9 +30,9 @@ router.route('/events/:id')
     Events.deleteEvent(req, res);
   });
 
-router.get('/new', (req, res) => {
-  res.render('new');
-});
+// router.get('/new', (req, res) => {
+//   res.render('new');
+// });
 
 // router.post('/new', (req, res) => {
 //   const newEvent = {
