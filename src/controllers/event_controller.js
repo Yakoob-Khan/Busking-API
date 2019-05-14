@@ -62,11 +62,16 @@ export const updateEvent = (req, res) => {
     });
 };
 
-export const rateEvent = (eventId, rating) => {
+export const rateEvent = (req, res) => {
+  const eventId = req.params.id;
+  const { rating } = req.body;
+  if (rating > 5 || rating < 0) { return res.status(499).json({ error: 'rating not valid' }); }
   return Event.findOne({ _id: eventId }).then((event) => {
     console.log(`updating vote: ${event} ${rating}`);
     event.averageRating = (event.averageRating * event.numberOfRatings + rating) / (event.numberOfRatings + 1);
     event.numberOfRatings += 1;
     return event.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
   });
 };

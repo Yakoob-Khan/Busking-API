@@ -48,8 +48,8 @@ router.route('/events/:id')
 // });
 
 router.post('/events/rate/:id', (req, res) => {
-  const { rating } = req.body;
-  Events.rateEvent(req.params.id, rating).then((result) => {
+  // const { rating } = req.body;
+  Events.rateEvent(req, res).then((result) => {
     res.send(result);
   });
 });
