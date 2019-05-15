@@ -27,7 +27,7 @@ export const createEvent = (req, res) => {
   // returns a promise
   const e = new Event();
   e.title = req.body.title;
-  e.imageUrl = req.body.imageUrl;
+  e.imageURL = req.body.imageURL;
   e.longitude = req.body.longitude;
   e.latitude = req.body.latitude;
   e.eventCreator = req.body.eventCreator;
