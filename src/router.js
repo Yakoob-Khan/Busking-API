@@ -30,25 +30,7 @@ router.route('/events/:id')
     Events.deleteEvent(req, res);
   });
 
-// router.get('/new', (req, res) => {
-//   res.render('new');
-// });
-
-// router.post('/new', (req, res) => {
-//   const newEvent = {
-//     title: req.body.title,
-//     imageURL: req.body.imageURL,
-//     longitude: req.body.longitude,
-//     latitude: req.body.latitude,
-//     eventCreator: req.body.eventCreator,
-//   };
-//   Events.createEvent(newEvent).then((event) => {
-//     res.redirect('/');
-//   });
-// });
-
 router.post('/events/rate/:id', (req, res) => {
-  // const { rating } = req.body;
   Events.rateEvent(req, res).then((result) => {
     res.send(result);
   });

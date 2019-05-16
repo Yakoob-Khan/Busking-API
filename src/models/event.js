@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 const EventSchema = new Schema({
   title: String,
   imageURL: String,
-  averageRating: { type: Number, default: 0 },
+  sumOfRating: { type: Number, default: 0 },
   numberOfRatings: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
@@ -14,8 +14,12 @@ const EventSchema = new Schema({
   },
 });
 
-EventSchema.virtual('score').get(function scoreCalc() {
-  return this.upvotes - this.downvotes;
+EventSchema.virtual('averageRating').get(function averageRatingCalc() {
+  if (this.numberOfRatings === 0) {
+    return 0;
+  } else {
+    return this.sumOfRating / this.numberOfRatings;
+  }
 });
 
 // create model class

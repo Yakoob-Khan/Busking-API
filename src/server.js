@@ -50,6 +50,6 @@ console.log(`listening on: ${port}`);
 
 // DB Setup
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
-mongoose.connect(mongoURI);
+mongoose.connect(mongoURI, { useNewUrlParser: true });
 // set mongoose promises to es6 default
 mongoose.Promise = global.Promise;
