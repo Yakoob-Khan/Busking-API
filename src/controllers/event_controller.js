@@ -1,5 +1,7 @@
 import Event from '../models/event';
 
+const stripe = require('stripe')('sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy');
+
 export const getEvents = (req, res) => {
   // should return a promise that returns a list of events
   return Event.find({})
@@ -73,4 +75,16 @@ export const rateEvent = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
+};
+
+export const payment = (req, res) => {
+  console.log(req.body);
+  return stripe.charges
+    .create({
+      amount: req.body.amount, // Unit: cents
+      currency: 'USD',
+      source: req.body.source,
+      description: req.body.description,
+    })
+    .then((result) => { return res.status(200).json(result); });
 };

@@ -25,7 +25,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mongoose": "^5.5.5",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "stripe": "^7.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
