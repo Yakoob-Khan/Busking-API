@@ -1,6 +1,5 @@
 import Event from '../models/event';
 
-
 export const getEvents = (req, res) => {
   // should return a promise that returns a list of events
   return Event.find({})
@@ -25,14 +24,15 @@ export const createEvent = (req, res) => {
   // takes in an object with the fields that event should shave
   // and saves them to the database
   // returns a promise
-  const e = new Event();
-  e.title = req.body.title;
-  e.imageURL = req.body.imageURL;
-  e.longitude = req.body.longitude;
-  e.latitude = req.body.latitude;
-  e.eventCreator = req.body.eventCreator;
-  // e.eventCreator = req.user.userName; ?? How do we do this without passport
-  return e.save()
+  const event = new Event({
+    title: req.body.title,
+    description: req.body.description,
+    imageURL: req.body.imageURL,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
+    eventCreator: req.body.eventCreator,
+  });
+  return event.save()
     .then((result) => {
       res.json({ message: 'event created!' });
     })
@@ -67,7 +67,7 @@ export const rateEvent = (req, res) => {
   const { rating } = req.body;
   if (rating > 5 || rating < 0) { return res.status(499).json({ error: 'rating not valid' }); }
   return Event.findOne({ _id: eventId }).then((event) => {
-    event.sumOfRating = event.sumOfRating + parseInt(rating, 10);
+    event.sumOfRating += parseInt(rating, 10);
     event.numberOfRatings += 1;
     return event.save();
   }).catch((error) => {
