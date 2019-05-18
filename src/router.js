@@ -9,15 +9,14 @@ router.get('/', (req, res) => {
 });
 
 router.route('/events')
-  .post((req, res) => {
-    Events.createEvent(req, res);
-  })
-  .get((req, res) => {
-    Events.getEvents(req, res);
-  })
-  .delete((req, res) => {
-    Events.deleteEvent(req, res);
-  });
+  .post(Events.createEvent)
+  .get(Events.getEvents);
+// .get((req, res) => {
+//   Events.getEvents(req, res);
+// })
+// .delete((req, res) => {
+//   Events.deleteEvent(req, res);
+// });
 
 router.route('/events/:id')
   .get((req, res) => {

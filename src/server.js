@@ -7,6 +7,16 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import apiRouter from './router';
 
+
+// DB Setup
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
+mongoose.connect(mongoURI, { useNewUrlParser: true });
+// Credit to remove deprecated warning:
+// https://stackoverflow.com/questions/50448272/avoid-current-url-string-parser-is-deprecated-warning-by-setting-usenewurlpars
+mongoose.connect(mongoURI, { useNewUrlParser: true });
+// set mongoose promises to es6 default
+mongoose.Promise = global.Promise;
+
 // initialize
 const app = express();
 
@@ -47,9 +57,3 @@ const port = process.env.PORT || 9090;
 app.listen(port);
 
 console.log(`listening on: ${port}`);
-
-// DB Setup
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
-mongoose.connect(mongoURI, { useNewUrlParser: true });
-// set mongoose promises to es6 default
-mongoose.Promise = global.Promise;

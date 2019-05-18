@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const EventSchema = new Schema({
   title: String,
+  description: String,
   imageURL: String,
   sumOfRating: { type: Number, default: 0 },
   numberOfRatings: { type: Number, default: 0 },
