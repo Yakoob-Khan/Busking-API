@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Events from './controllers/event_controller';
+import * as Users from './controllers/user_controller';
 // import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
@@ -28,6 +29,28 @@ router.route('/events/:id')
   })
   .delete((req, res) => {
     Events.deleteEvent(req, res);
+  });
+
+router.route('/users')
+  .get((req, res) => {
+    Users.getUsers(req, res);
+  })
+  .post((req, res) => {
+    Users.signUp(req, res);
+  })
+  .delete((req, res) => {
+    Users.deleteEvent(req, res);
+  });
+
+router.route('/users/:id')
+  .get((req, res) => {
+    Users.getUser(req, res);
+  })
+  .put((req, res) => {
+    Users.updateUser(req, res);
+  })
+  .delete((req, res) => {
+    Users.deleteUser(req, res);
   });
 
 router.post('/events/rate/:id', (req, res) => {
