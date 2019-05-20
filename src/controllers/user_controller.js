@@ -6,8 +6,10 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
   return User.findOne({
     'facebookProvider.id': profile.id,
   }, (err, user) => {
+    console.log(user);
     // no user was found, lets create a new one
     if (!user) {
+      console.log('not user');
       const newUser = new User({
         fullName: profile.displayName,
         email: profile.emails[0].value,
@@ -24,6 +26,7 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
         return cb(error, savedUser);
       });
     } else {
+      console.log('yes user');
       return cb(err, user);
     }
   });

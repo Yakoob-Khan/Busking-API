@@ -24,9 +24,16 @@
     "cors": "^2.8.5",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "express-generator": "^4.16.1",
+    "express-server": "^0.7.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.5",
     "morgan": "^1.9.1",
-    "stripe": "^7.0.0"
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "request": "^2.88.0",
+    "stripe": "^7.0.0",
+    "utils": "^0.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

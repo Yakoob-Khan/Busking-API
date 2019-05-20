@@ -1,7 +1,9 @@
 /* eslint-disable consistent-return */
-const express = require('express');
+// const express = require('express');
+import { Router } from 'express';
 
-const router = express.Router();
+const router = Router();
+// const router = express.Router();
 const passport = require('passport');
 const { generateToken, sendToken } = require('./utils/token.utils');
 // const config = require('./config');

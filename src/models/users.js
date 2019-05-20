@@ -28,7 +28,7 @@ UserSchema.set('toJSON', {
 const UserModel = mongoose.model('User', UserSchema);
 
 // DB Setup
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/social-auth-example';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
 mongoose.connect(mongoURI);
 // set mongoose promises to es6 default
 mongoose.Promise = global.Promise;
