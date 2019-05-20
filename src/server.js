@@ -1,11 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+// import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 // at top of server.js
 import mongoose from 'mongoose';
 import apiRouter from './router';
+import authRouter from './auth_routes';
 
 
 // DB Setup
@@ -21,7 +23,13 @@ mongoose.Promise = global.Promise;
 const app = express();
 
 // enable/disable cross origin resource sharing if necessary
-app.use(cors());
+const corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token'],
+};
+app.use(cors(corsOption));
 
 // enable/disable http request logging
 app.use(morgan('dev'));
@@ -43,6 +51,7 @@ app.use(bodyParser.json());
 // all of our routes will be prefixed with /api
 // this should go AFTER body parser
 app.use('/api', apiRouter);
+app.use('/auth', authRouter);
 
 // additional init stuff should go before hitting the routing
 
