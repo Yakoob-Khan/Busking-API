@@ -3,6 +3,8 @@ import mongoose, { Schema } from 'mongoose';
 // const bcrypt = require('bcryptjs');
 // create a PostSchema with a title field
 const UserSchema = new Schema({
+  photo: String,
+  name: String,
   email: {
     type: String,
     required: true,
