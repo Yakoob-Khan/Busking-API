@@ -9,6 +9,7 @@ const EventSchema = new Schema({
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
   eventCreator: String,
+  // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: {
     virtuals: true,
