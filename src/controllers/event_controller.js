@@ -32,6 +32,7 @@ export const createEvent = (req, res) => {
     imageURL: req.body.imageURL,
     longitude: req.body.longitude,
     latitude: req.body.latitude,
+    address: req.body.address,
     eventCreator: req.user.name,
   });
   return event.save()
