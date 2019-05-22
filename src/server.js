@@ -4,22 +4,10 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
-// at top of server.js
 import mongoose from 'mongoose';
 import apiRouter from './router';
 import authRouter from './auth_routes';
-// eslint-disable-next-line no-unused-vars
-// eslint-disable-next-line import/no-duplicates
 import passport, { requireAuth } from './passport';
-
-// const uuid = require('uuid/v4');
-
-// const session = require('express-session');
-
-// const FileStore = require('session-file-store')(session);
-// const initPassport = require('./passport');
-
-// initPassport(passport);
 
 
 // DB Setup
@@ -61,30 +49,6 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     httpOnly: false,
-//     secure: false,
-//     maxAge: 36000000,
-//   },
-//   rolling: true,
-// }));
-// app.use(session({
-//   genid: (req) => {
-//     console.log('Inside the session middleware');
-//     console.log(req.sessionID);
-//     return uuid(); // use UUIDs for session IDs
-//   },
-//   store: new FileStore(),
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: false, maxAge: (4 * 60 * 60 * 1000) },
-// }));
-
 app.use(passport.initialize());
 // app.use(passport.session());
 
@@ -92,8 +56,6 @@ app.use(passport.initialize());
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 // this should go AFTER body parser
-// app.use('/api', passport.initialize(), isUserAuthenticated, apiRouter);
-// app.use('/auth', passport.initialize(), isUserAuthenticated, authRouter);
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
 // additional init stuff should go before hitting the routing

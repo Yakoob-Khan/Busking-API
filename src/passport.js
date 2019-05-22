@@ -1,17 +1,9 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import config from './config';
-// import User from './models/users';
-// const User = require('mongoose').model('User');
 import * as UserController from './controllers/user_controller';
 import User from './models/users';
 
-// const config = require('./config');
-// const passport = require('passport');
-
-// require('./models/users')();
-// const passport = require('passport');
-// const User = require('mongoose').model('User');
 const FacebookTokenStrategy = require('passport-facebook-token');
 
 // module.exports = function exports() {
@@ -30,7 +22,7 @@ const FacebookLogin = new FacebookTokenStrategy({
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: 'keyboard cat',
+  secretOrKey: config.authSecret,
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
@@ -58,31 +50,13 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-// Used to decode the received cookie and persist session
-// passport.deserializeUser((id, done) => {
-//   console.log('deserializing');
-//   // // User.findOne({ email }, (err, user) => {
-//   // done(null, user);
-//   // // });
-//   User.findById(id, (err, user) => {
-//     console.log('found');
-//     done(null, user);
-//   });
-// });
 passport.deserializeUser((user, done) => {
   console.log('Inside deserializeUser callback');
-  // console.log(`The user id passport saved in the session file store is: ${id}`);
   done(null, user);
-  // const user = users[0].id === id ? users[0] : false;
-  // User.findById(id, (err, user) => {
-  //   done(null, user);
-  // });
 });
-// };
 
 export function isUserAuthenticated(req, res, next) {
   if (req.user) {
-    // done(null, user);
     next();
   } else {
     res.send('You must login!');

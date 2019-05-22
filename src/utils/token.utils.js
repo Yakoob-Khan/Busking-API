@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+import config from '../config';
 
 const createToken = function createToken(auth) {
   console.log('creating token');
   return jwt.sign({
     id: auth.id,
-  }, 'keyboard cat',
+  }, config.authSecret,
   {
     expiresIn: 10 * 60 * 1000,
   });
