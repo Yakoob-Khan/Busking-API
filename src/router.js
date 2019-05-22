@@ -5,7 +5,7 @@ import * as Events from './controllers/event_controller';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.json({ message: 'welcome to BUSKING API' });
+  res.json({ message: 'welcome to the BUSKING API' });
 });
 
 router.route('/events')

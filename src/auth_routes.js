@@ -35,31 +35,19 @@ router.route('/facebook')
     req.auth = {
       id: req.user.id,
     };
-    const { user } = req;
-    req.login(user, (err) => {
-      console.log('Inside req.login() callback');
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
-      console.log(`req.user: ${JSON.stringify(req.user)}`);
-      // return res.send('You were authenticated & logged in!\n');
-    });
+    // const { user } = req;
+    // req.login(user, (err) => {
+    //   console.log('Inside req.login() callback');
+    //   console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
+    //   console.log(`req.user: ${JSON.stringify(req.user)}`);
+    //   // return res.send('You were authenticated & logged in!\n');
+    // });
     // req.user = req.user;
     // req.user.save();
     console.log('req session in hit route facebook');
     console.log(req.user);
     // req.session.save();
     console.log(req.session);
-    // req.login(req.user, (err) => {
-    //   console.log('req logging in in');
-    //   if (err) { return next(err); }
-    //   // return res.redirect(`/users/${req.user.username}`);
-    //   return next();
-    // });
-    // req.logIn(req.user, () => {
-    //   // return res.json({
-    //   //   sessionId: cookie.sign(req.sessionID, 'keyboard cat'),
-    //   //   profile: req.user.profile,
-    //   // });
-    // });
 
     next();
   }, generateToken, sendToken);
@@ -101,11 +89,11 @@ router.route('/facebook')
 //     res.redirect('/');
 //   });
 
-router.get('/sessionTest', (req, res, next) => {
-  console.log('session test');
-  console.log(req.session);
-  res.send(req.session);
-  // console.log(req.user);
-});
+// router.get('/sessionTest', requireAuth, (req, res, next) => {
+//   console.log('session test');
+//   console.log(req.session);
+//   res.send(req.session);
+//   // console.log(req.user);
+// });
 
 module.exports = router;

@@ -10,13 +10,11 @@ import apiRouter from './router';
 import authRouter from './auth_routes';
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line import/no-duplicates
-// import { isUserAuthenticated } from './passport';
-import passport from './passport';
-
+import passport, { requireAuth } from './passport';
 
 // const uuid = require('uuid/v4');
 
-const session = require('express-session');
+// const session = require('express-session');
 
 // const FileStore = require('session-file-store')(session);
 // const initPassport = require('./passport');
@@ -43,7 +41,7 @@ const corsOption = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   exposedHeaders: ['x-auth-token'],
-  allowedHeaders: 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept',
+  allowedHeaders: 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept, authorization',
 };
 app.use(cors(corsOption));
 
@@ -63,17 +61,17 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: false,
-    secure: false,
-    maxAge: 36000000,
-  },
-  rolling: true,
-}));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     httpOnly: false,
+//     secure: false,
+//     maxAge: 36000000,
+//   },
+//   rolling: true,
+// }));
 // app.use(session({
 //   genid: (req) => {
 //     console.log('Inside the session middleware');
@@ -88,7 +86,7 @@ app.use(session({
 // }));
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 
 // REGISTER OUR ROUTES -------------------------------
@@ -101,11 +99,7 @@ app.use('/auth', authRouter);
 // additional init stuff should go before hitting the routing
 
 // default index route
-app.get('/', (req, res) => {
-  console.log('req.user');
-  console.log(req.user);
-  console.log('req.session');
-  console.log(req.session);
+app.get('/', requireAuth, (req, res) => {
   if (req.user) {
     console.log(req.user);
     res.send(req.user);
