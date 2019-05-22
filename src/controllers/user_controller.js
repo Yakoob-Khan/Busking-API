@@ -17,6 +17,11 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
         name: profile.displayName,
         email: profile.emails[0].value,
         sumOfRating: 0,
+        numberOfRatings: 0,
+        followers: [],
+        following: [],
+        eventsHosted: [],
+        eventsAttended: [],
         facebookProvider: {
           id: profile.id,
           token: accessToken,

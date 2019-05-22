@@ -34,6 +34,7 @@ export const createEvent = (req, res) => {
     latitude: req.body.latitude,
     address: req.body.address,
     eventCreator: req.user.name,
+    eventCreatorPhoto: req.user.photo,
   });
   return event.save()
     .then((result) => {

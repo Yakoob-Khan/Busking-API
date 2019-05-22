@@ -10,6 +10,7 @@ const EventSchema = new Schema({
   latitude: { type: Number, default: 0 },
   address: String,
   eventCreator: String,
+  eventCreatorPhoto: String,
   // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: {
