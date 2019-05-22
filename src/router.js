@@ -1,17 +1,16 @@
 import { Router } from 'express';
 import * as Events from './controllers/event_controller';
 import * as Users from './controllers/user_controller';
-// import { requireAuth, requireSignin } from './services/passport';
-
+import { requireAuth } from './passport';
 
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.json({ message: 'welcome to BUSKING API' });
+  res.json({ message: 'welcome to the BUSKING API' });
 });
 
 router.route('/events')
-  .post(Events.createEvent)
+  .post(requireAuth, (req, res) => { return Events.createEvent(req, res); })
   .get(Events.getEvents);
 // .get((req, res) => {
 //   Events.getEvents(req, res);
