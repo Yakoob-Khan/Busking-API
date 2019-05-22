@@ -16,6 +16,12 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
         photo: profile.photos[0].value,
         name: profile.displayName,
         email: profile.emails[0].value,
+        sumOfRating: 0,
+        numberOfRatings: 0,
+        followers: [],
+        following: [],
+        eventsHosted: [],
+        eventsAttended: [],
         facebookProvider: {
           id: profile.id,
           token: accessToken,
@@ -57,8 +63,8 @@ export const getUser = (req, res) => {
 
 export const signUp = (req, res) => {
   const u = new User();
-  u.username = req.body.username;
-  u.profilepic_url = req.body.profilepic_url;
+  u.name = req.body.username;
+  u.photo = req.body.photo;
   u.email = req.body.email;
   return u.save()
     .then((result) => {

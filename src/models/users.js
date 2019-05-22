@@ -3,8 +3,14 @@ import mongoose, { Schema } from 'mongoose';
 // const bcrypt = require('bcryptjs');
 // create a PostSchema with a title field
 const UserSchema = new Schema({
-  photo: String,
   name: String,
+  photo: String,
+  sumOfRating: { type: Number, default: 0 },
+  numberOfRatings: { type: Number, default: 0 },
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  eventsHosted: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
+  eventsAttended: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
   email: {
     type: String,
     required: true,

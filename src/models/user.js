@@ -1,9 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
 
 const UserSchema = new Schema({
-  username: String,
+  name: String,
   email: String,
-  profilepic_url: String,
+  photo: String,
   sumOfRating: { type: Number, default: 0 },
   numberOfRatings: { type: Number, default: 0 },
   followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
