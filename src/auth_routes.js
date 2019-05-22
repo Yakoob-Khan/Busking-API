@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { Router } from 'express';
 import passport from 'passport';
+import { requireAuth } from './passport';
 
 const router = Router();
 
@@ -21,5 +22,10 @@ router.route('/facebook')
 
     next();
   }, generateToken, sendToken);
+
+router.get('/facebook/refresh', requireAuth, (req, res) => {
+  console.log('hit route');
+  return res.status(200).send(JSON.stringify(req.user));
+});
 
 module.exports = router;
