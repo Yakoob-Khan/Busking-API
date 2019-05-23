@@ -32,6 +32,14 @@ UserSchema.set('toJSON', {
   virtuals: true,
 });
 
+UserSchema.virtual('averageRating').get(function averageRatingCalc() {
+  if (this.numberOfRatings === 0) {
+    return 0;
+  } else {
+    return this.sumOfRating / this.numberOfRatings;
+  }
+});
+
 // create model class
 const UserModel = mongoose.model('User', UserSchema);
 
