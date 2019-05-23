@@ -26,6 +26,7 @@ export const createEvent = (req, res) => {
   // takes in an object with the fields that event should shave
   // and saves them to the database
   // returns a promise
+  console.log(req.user);
   const event = new Event({
     title: req.body.title,
     description: req.body.description,
@@ -33,8 +34,9 @@ export const createEvent = (req, res) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     address: req.body.address,
-    eventCreator: req.user.name,
-    eventCreatorPhoto: req.user.photo,
+    // eventCreator: req.user.name,
+    // eventCreatorPhoto: req.user.photo,
+    host: req.user,
   });
   return event.save()
     .then((result) => {
