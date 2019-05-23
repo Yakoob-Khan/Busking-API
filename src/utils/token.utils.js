@@ -1,11 +1,14 @@
 import jwt from 'jsonwebtoken';
-import config from '../config';
+// import config from '../config';
+import dotenv from 'dotenv';
+
+dotenv.config({ silent: true });
 
 const createToken = function createToken(auth) {
   console.log('creating token');
   return jwt.sign({
     id: auth.id,
-  }, config.authSecret,
+  }, process.env.authSecretJWT,
   {
     expiresIn: 10 * 60 * 1000,
   });

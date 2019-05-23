@@ -1,15 +1,18 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import config from './config';
+// import config from './config';
+import dotenv from 'dotenv';
 import * as UserController from './controllers/user_controller';
 import User from './models/users';
+
+dotenv.config({ silent: true });
 
 const FacebookTokenStrategy = require('passport-facebook-token');
 
 // module.exports = function exports() {
 const FacebookLogin = new FacebookTokenStrategy({
-  clientID: config.facebookAuth.clientID,
-  clientSecret: config.facebookAuth.clientSecret,
+  clientID: process.env.facebookAuthClientID,
+  clientSecret: process.env.facebookAuthClientSecret,
   callbackURL: '/auth/facebook/return',
 },
 ((accessToken, refreshToken, profile, done) => {
@@ -22,7 +25,7 @@ const FacebookLogin = new FacebookTokenStrategy({
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.authSecret,
+  secretOrKey: process.env.authSecretJWT,
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
