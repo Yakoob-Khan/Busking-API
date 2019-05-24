@@ -12,6 +12,8 @@ const EventSchema = new Schema({
   address: String,
   eventCreator: String,
   eventCreatorPhoto: String,
+  startTime: String,
+  endTime: String,
   host: { type: Schema.Types.ObjectId, ref: 'User' },
   // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
