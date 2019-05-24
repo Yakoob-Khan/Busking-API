@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Events from './controllers/event_controller';
 import * as Users from './controllers/user_controller';
+import * as Comments from './controllers/comment_controller';
 import { requireAuth } from './passport';
 
 const router = Router();
@@ -59,6 +60,10 @@ router.post('/events/rate/:id', (req, res) => {
   Events.rateEvent(req, res).then((result) => {
     res.send(result);
   });
+});
+
+router.get(requireAuth, '/comment/:eventId', (req, res) => {
+  Comments.writeComment(req, res);
 });
 
 export default router;
