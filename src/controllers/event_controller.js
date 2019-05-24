@@ -1,4 +1,5 @@
 import Event from '../models/event';
+import User from '../models/users';
 
 const stripe = require('stripe')('sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy');
 
@@ -26,7 +27,6 @@ export const createEvent = (req, res) => {
   // takes in an object with the fields that event should shave
   // and saves them to the database
   // returns a promise
-  console.log(req.user);
   const event = new Event({
     title: req.body.title,
     description: req.body.description,
@@ -36,7 +36,11 @@ export const createEvent = (req, res) => {
     address: req.body.address,
     // eventCreator: req.user.name,
     // eventCreatorPhoto: req.user.photo,
-    host: req.user,
+    host: req.user.id,
+  });
+  User.findById(req.user.id, (err, user) => {
+    user.eventsHosted.push(event);
+    user.save();
   });
   return event.save()
     .then((result) => {

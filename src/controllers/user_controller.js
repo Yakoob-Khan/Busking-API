@@ -53,7 +53,7 @@ export const getUsers = (req, res) => {
 
 export const getUser = (req, res) => {
   const { id } = req.params;
-  return User.findById(id)
+  return User.findById(id).populate('eventsHosted')
     .then((result) => {
       res.json(result);
     }).catch((error) => {
