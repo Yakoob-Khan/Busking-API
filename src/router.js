@@ -62,8 +62,14 @@ router.post('/events/rate/:id', (req, res) => {
   });
 });
 
-router.get(requireAuth, '/comment/:eventId', (req, res) => {
-  Comments.writeComment(req, res);
-});
+// router.get(requireAuth, '/comment/:id', (req, res) => {
+//   Comments.writeComment(req, res);
+// });
+// router.get('/comment', (req, res) => {
+//   res.send('hey');
+// });
+
+router.route('/comment/:id')
+  .post(requireAuth, (req, res) => { return Comments.writeComment(req, res); });
 
 export default router;

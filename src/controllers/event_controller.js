@@ -15,7 +15,7 @@ export const getEvents = (req, res) => {
 
 export const getEvent = (req, res) => {
   const { id } = req.params;
-  return Event.findById(id)
+  return Event.findById(id).populate('comments')
     .then((result) => {
       res.json(result);
     }).catch((error) => {
