@@ -67,4 +67,10 @@ router.post('/events/rate/:id', (req, res) => {
   });
 });
 
+router.route('/events/attend/:id')
+  .get(requireAuth, (req, res) => { return Events.attendEvent(req, res); });
+
+router.route('/events/leave/:id')
+  .get(requireAuth, (req, res) => { return Events.leaveEvent(req, res); });
+
 export default router;
