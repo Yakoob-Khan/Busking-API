@@ -53,10 +53,11 @@ export const getUsers = (req, res) => {
 
 export const getUser = (req, res) => {
   const { id } = req.params;
-  return User.findById(id).populate('eventsHosted')
+  return User.findById(id).populate('eventsHosted').populate('followers').populate('following')
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
@@ -94,6 +95,38 @@ export const updateUser = (req, res) => {
     }).catch((error) => {
       res.status(500).json({ error });
     });
+};
+
+export const followUser = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.following.push(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  User.findById(id, (err, user) => {
+    user.followers.push(req.user.id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+};
+
+export const unFollowUser = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.following.pull(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  User.findById(id, (err, user) => {
+    user.followers.pull(req.user.id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
 };
 
 export const rateUser = (req, res) => {
