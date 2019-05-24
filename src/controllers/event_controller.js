@@ -75,7 +75,7 @@ export const updateEvent = (req, res) => {
 export const rateEvent = (req, res) => {
   const eventId = req.params.id;
   const { rating } = req.body;
-  if (rating > 5 || rating < 0) { return res.status(499).json({ error: 'rating not valid' }); }
+  console.log(rating);
   return Event.findOne({ _id: eventId }).then((event) => {
     event.sumOfRating += parseInt(rating, 10);
     event.numberOfRatings += 1;
