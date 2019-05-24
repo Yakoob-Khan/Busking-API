@@ -55,6 +55,12 @@ router.route('/users/:id')
     Users.deleteUser(req, res);
   });
 
+router.route('/users/follow/:id')
+  .get(requireAuth, (req, res) => { return Users.followUser(req, res); });
+
+router.route('/users/unfollow/:id')
+  .get(requireAuth, (req, res) => { return Users.unFollowUser(req, res); });
+
 router.post('/events/rate/:id', (req, res) => {
   Events.rateEvent(req, res).then((result) => {
     res.send(result);
