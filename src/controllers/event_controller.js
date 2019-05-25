@@ -15,10 +15,16 @@ export const getEvents = (req, res) => {
 
 export const getEvent = (req, res) => {
   const { id } = req.params;
-  return Event.findById(id).populate('comments')
+  return Event.findById(id).populate({
+    path: 'comments',
+    model: 'Comment',
+    populate: { path: 'author', model: 'User' },
+  })
     .then((result) => {
+      console.log(result);
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };

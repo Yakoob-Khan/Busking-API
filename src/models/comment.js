@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const CommentSchema = new Schema({
   text: String,
-  author: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
   // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: {
