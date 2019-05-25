@@ -54,6 +54,7 @@ export const getUsers = (req, res) => {
 export const getUser = (req, res) => {
   const { id } = req.params;
   return User.findById(id).populate('eventsHosted').populate('followers').populate('following')
+    .populate('eventsAttended')
     .then((result) => {
       res.json(result);
     })

@@ -15,7 +15,7 @@ export const getEvents = (req, res) => {
 
 export const getEvent = (req, res) => {
   const { id } = req.params;
-  return Event.findById(id)
+  return Event.findById(id).populate('attendees')
     .then((result) => {
       res.json(result);
     }).catch((error) => {
@@ -85,6 +85,38 @@ export const rateEvent = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
+};
+
+export const attendEvent = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.eventsAttended.push(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  Event.findByIdAndUpdate(id, { $push: { attendees: req.user.id } }, { new: true }).populate('attendees')
+    .then((result) => {
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const leaveEvent = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.eventsAttended.pull(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  Event.findByIdAndUpdate(id, { $pull: { attendees: req.user.id } }, { new: true }).populate('attendees')
+    .then((result) => {
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error });
+    });
 };
 
 export const payment = (req, res) => {
