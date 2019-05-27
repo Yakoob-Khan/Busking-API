@@ -16,6 +16,24 @@ export const getEvents = (req, res) => {
     });
 };
 
+export const searchEvents = (req, res) => {
+  console.log('hello');
+  // const regex = new RegExp(req.body.search, 'i'); // 'i' makes it case insensitive
+  // return Questions.find({ text: regex }, (err, q) => {
+  // return res.send(q);
+  // });
+  return Event.find({}).populate({
+    path: 'comments',
+    model: 'Comment',
+    populate: { path: 'author', model: 'User' },
+  }).populate({ path: 'attendees' }).populate({ path: 'host' })
+    // eslint-disable-next-line quotes
+    // .find({ host: { sumOfRating: 0 } })
+    .then((result) => {
+      res.json(result);
+    });
+};
+
 export const getEvent = (req, res) => {
   const { id } = req.params;
   // <<<<<<< HEAD
