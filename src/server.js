@@ -12,7 +12,6 @@ import passport, { requireAuth } from './passport';
 
 // DB Setup
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
-mongoose.connect(mongoURI, { useNewUrlParser: true });
 // Credit to remove deprecated warning:
 // https://stackoverflow.com/questions/50448272/avoid-current-url-string-parser-is-deprecated-warning-by-setting-usenewurlpars
 mongoose.connect(mongoURI, { useNewUrlParser: true });
