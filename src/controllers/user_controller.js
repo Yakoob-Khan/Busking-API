@@ -2,16 +2,15 @@
 /* eslint-disable consistent-return */
 import User from '../models/users';
 
+
 export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
   return User.findOne({
     'facebookProvider.id': profile.id,
   }, (err, user) => {
-    console.log('hit upsertFbuser in controller');
     // console.log(user);
     // console.log(profile);
     // no user was found, lets create a new one
     if (!user) {
-      console.log('not user');
       const newUser = new User({
         photo: profile.photos[0].value,
         name: profile.displayName,
@@ -26,6 +25,7 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
           id: profile.id,
           token: accessToken,
         },
+        stripeId: '',
       });
 
       newUser.save((error, savedUser) => {
@@ -89,6 +89,7 @@ export const deleteUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
   return User.findByIdAndUpdate(id, { $set: req.body }, { new: true })
     .then((result) => {
@@ -141,4 +142,16 @@ export const rateUser = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
+};
+
+export const updateStripeId = (req, res) => {
+  console.log('hitting update stripe id end point!');
+  console.log(req.body);
+  const { id } = req.body;
+  return User.findByIdAndUpdate(id, { $set: req.body }, { new: true })
+    .then((result) => {
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error });
+    });
 };
