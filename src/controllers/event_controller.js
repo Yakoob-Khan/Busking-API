@@ -130,9 +130,12 @@ export const payment = (req, res) => {
       currency: 'USD',
       source: req.body.source,
       description: req.body.description,
+    }, {
+      stripe_account: req.body.stripeId,
     })
     .then((result) => { return res.status(200).json(result); });
 };
+
 
 export const stripeAccount = (req, res) => {
   return axios.post('https://connect.stripe.com/oauth/token',
@@ -141,11 +144,16 @@ export const stripeAccount = (req, res) => {
       code: req.body.code,
       grant_type: 'authorization_code',
     })
-    .then((response) => {
-      // return res.status(200).json(response); }
-      res.send(response.data);
+    .then((result) => {
+    // return res.status(200).json(response); }
+    // return res.send.status(200).json(result.data);
+    // res.json({ response.data })
+    // console.log(response.data);
+      return res.send(result.data);
     })
     .catch((error) => {
-      return res.status(500).json({ error });
+      console.log(error.data);
+    // console.log(error.data);
+    // return res.status(500).json(error);
     });
 };
