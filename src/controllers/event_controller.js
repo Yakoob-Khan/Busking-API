@@ -1,7 +1,10 @@
+/* eslint-disable camelcase */
+// import axios from 'axios';
 import Event from '../models/event';
 import User from '../models/users';
 
-const stripe = require('stripe')('sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy');
+const stripe_secret_key = 'sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy';
+const stripe = require('stripe')(stripe_secret_key);
 
 export const getEvents = (req, res) => {
   // should return a promise that returns a list of events
@@ -130,3 +133,22 @@ export const payment = (req, res) => {
     })
     .then((result) => { return res.status(200).json(result); });
 };
+
+// export const stripeAccount = (req, res) => {
+//   console.log('in Stripe Account');
+//   console.log(req.body);
+//   return axios.post('https://connect.stripe.com/oauth/token',
+//     {
+//       client_secret: stripe_secret_key,
+//       code: req.body.code,
+//       grant_type: 'authorization_code',
+//     })
+//     .then((response) => {
+//       console.log('in the stripe account function!!!!');
+//       console.log(response.data);
+//       res.send(response);
+//     })
+//     .catch((error) => {
+//       res.send(error);
+//     });
+// };

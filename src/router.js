@@ -22,6 +22,9 @@ router.route('/events')
 router.route('/payment')
   .post(Events.payment);
 
+// router.route('/stripeAccount')
+//   .post(Events.stripeAccount);
+
 router.route('/events/:id')
   .get((req, res) => {
     Events.getEvent(req, res);
