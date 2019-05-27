@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Events from './controllers/event_controller';
 import * as Users from './controllers/user_controller';
+import * as Comments from './controllers/comment_controller';
 import { requireAuth } from './passport';
 
 const router = Router();
@@ -73,6 +74,15 @@ router.post('/events/rate/:id', (req, res) => {
   });
 });
 
+// router.get(requireAuth, '/comment/:id', (req, res) => {
+//   Comments.writeComment(req, res);
+// });
+// router.get('/comment', (req, res) => {
+//   res.send('hey');
+// });
+
+router.route('/comment/:id')
+  .post(requireAuth, (req, res) => { return Comments.writeComment(req, res); });
 router.route('/events/attend/:id')
   .get(requireAuth, (req, res) => { return Events.attendEvent(req, res); });
 

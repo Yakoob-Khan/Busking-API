@@ -8,6 +8,7 @@ const EventSchema = new Schema({
   numberOfRatings: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   address: String,
   // eventCreator: String,
   // eventCreatorPhoto: String,
