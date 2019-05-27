@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-// import axios from 'axios';
+import axios from 'axios';
 import Event from '../models/event';
 import User from '../models/users';
 
@@ -134,21 +134,18 @@ export const payment = (req, res) => {
     .then((result) => { return res.status(200).json(result); });
 };
 
-// export const stripeAccount = (req, res) => {
-//   console.log('in Stripe Account');
-//   console.log(req.body);
-//   return axios.post('https://connect.stripe.com/oauth/token',
-//     {
-//       client_secret: stripe_secret_key,
-//       code: req.body.code,
-//       grant_type: 'authorization_code',
-//     })
-//     .then((response) => {
-//       console.log('in the stripe account function!!!!');
-//       console.log(response.data);
-//       res.send(response);
-//     })
-//     .catch((error) => {
-//       res.send(error);
-//     });
-// };
+export const stripeAccount = (req, res) => {
+  return axios.post('https://connect.stripe.com/oauth/token',
+    {
+      client_secret: stripe_secret_key,
+      code: req.body.code,
+      grant_type: 'authorization_code',
+    })
+    .then((response) => {
+      // return res.status(200).json(response); }
+      res.send(response.data);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error });
+    });
+};

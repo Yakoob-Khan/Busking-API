@@ -5,7 +5,6 @@ import { requireAuth } from './passport';
 
 const router = Router();
 
-
 const { generateToken, sendToken } = require('./utils/token.utils');
 
 router.route('/facebook')
