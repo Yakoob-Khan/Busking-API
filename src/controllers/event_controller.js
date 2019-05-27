@@ -81,7 +81,6 @@ export const updateEvent = (req, res) => {
 export const rateEvent = (req, res) => {
   const eventId = req.params.id;
   const { rating } = req.body;
-  console.log(rating);
   return Event.findOne({ _id: eventId }).then((event) => {
     event.sumOfRating += parseInt(rating, 10);
     event.numberOfRatings += 1;
@@ -124,7 +123,6 @@ export const leaveEvent = (req, res) => {
 };
 
 export const payment = (req, res) => {
-  console.log(req.body);
   return stripe.charges
     .create({
       amount: req.body.amount, // Unit: cents
@@ -146,15 +144,9 @@ export const stripeAccount = (req, res) => {
       grant_type: 'authorization_code',
     })
     .then((result) => {
-    // return res.status(200).json(response); }
-    // return res.send.status(200).json(result.data);
-    // res.json({ response.data })
-    // console.log(response.data);
       return res.send(result.data);
     })
     .catch((error) => {
       console.log(error.data);
-    // console.log(error.data);
-    // return res.status(500).json(error);
     });
 };
