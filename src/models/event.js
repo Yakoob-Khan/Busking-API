@@ -15,7 +15,7 @@ const EventSchema = new Schema({
   endTime: String,
   host: { type: Schema.Types.ObjectId, ref: 'User' },
   attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  stripeAccount: '',
+  stripeId: String,
   // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: {

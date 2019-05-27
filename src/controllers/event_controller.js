@@ -42,6 +42,7 @@ export const createEvent = (req, res) => {
     // eventCreator: req.user.name,
     // eventCreatorPhoto: req.user.photo,
     host: req.user.id,
+    stripeId: req.body.stripeId,
   });
   User.findById(req.user.id, (err, user) => {
     user.eventsHosted.push(event);
