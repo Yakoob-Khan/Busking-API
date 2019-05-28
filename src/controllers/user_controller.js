@@ -145,8 +145,6 @@ export const rateUser = (req, res) => {
 };
 
 export const updateStripeId = (req, res) => {
-  console.log('hitting update stripe id end point!');
-  console.log(req.body);
   const { id } = req.body;
   return User.findByIdAndUpdate(id, { $set: req.body }, { new: true })
     .then((result) => {
