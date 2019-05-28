@@ -157,6 +157,7 @@ export const stripeAccount = (req, res) => {
       return res.send(result.data);
     })
     .catch((error) => {
+      res.status(500).json('error');
       console.log(error.data);
     });
 };
