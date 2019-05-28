@@ -13,7 +13,6 @@ const FacebookLogin = new FacebookTokenStrategy({
   callbackURL: '/auth/facebook/return',
 },
 ((accessToken, refreshToken, profile, done) => {
-  console.log('HIT passport facebook auth');
   UserController.upsertFbUser(accessToken, refreshToken, profile, (err, user) => {
     // return done(err, Object.assign(user._doc, { accessToken }));
     return done(err, user);
@@ -26,7 +25,6 @@ const jwtOptions = {
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-  console.log('HIT passport jwt auth');
   // See if the user ID in the payload exists in our database
   // If it does, call 'done' with that other
   // otherwise, call done without a user object

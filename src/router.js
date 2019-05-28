@@ -27,6 +27,11 @@ router.route('/search/event')
   .get((req, res) => {
     Events.searchEvents(req, res);
   });
+router.route('/stripeAccount')
+  .post(Events.stripeAccount);
+
+router.route('/userStripeId')
+  .put(Users.updateStripeId);
 
 router.route('/events/:id')
   .get((req, res) => {
