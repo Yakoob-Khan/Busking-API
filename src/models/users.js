@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     },
     select: false,
   },
-
+  stripeId: String,
 });
 
 UserSchema.set('toJSON', {

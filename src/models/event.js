@@ -8,9 +8,15 @@ const EventSchema = new Schema({
   numberOfRatings: { type: Number, default: 0 },
   longitude: { type: Number, default: 0 },
   latitude: { type: Number, default: 0 },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   address: String,
-  eventCreator: String,
-  eventCreatorPhoto: String,
+  // eventCreator: String,
+  // eventCreatorPhoto: String,
+  startTime: Date,
+  endTime: Date,
+  host: { type: Schema.Types.ObjectId, ref: 'User' },
+  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  stripeId: String,
   // eventCreator: { type: Schema.Types.ObjectId, ref: 'User' },
 }, {
   toJSON: {

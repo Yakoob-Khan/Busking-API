@@ -10,6 +10,7 @@ const UserSchema = new Schema({
   following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   eventsHosted: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
   eventsAttended: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
+  stripeId: String,
 }, {
   toJSON: {
     virtuals: true,

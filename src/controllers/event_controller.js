@@ -1,6 +1,11 @@
+/* eslint-disable quotes */
+/* eslint-disable camelcase */
+import axios from 'axios';
 import Event from '../models/event';
+import User from '../models/users';
 
-const stripe = require('stripe')('sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy');
+const stripe_secret_key = 'sk_test_Rs7JmI7NwuDFF7sSeHxStydx00MFE4aWqy';
+const stripe = require('stripe')(stripe_secret_key);
 
 export const getEvents = (req, res) => {
   // should return a promise that returns a list of events
@@ -12,12 +17,39 @@ export const getEvents = (req, res) => {
     });
 };
 
-export const getEvent = (req, res) => {
-  const { id } = req.params;
-  return Event.findById(id)
+// User.find({$or:[{region: "NA"},{sector:"Some Sector"}]}
+
+export const searchEvents = (req, res) => {
+  console.log('hello');
+  console.log(req.body);
+  const regex = new RegExp(req.body.searchTerm, 'i'); // 'i' makes it case insensitive
+  // return Questions.find({ text: regex }, (err, q) => {
+  // return res.send(q);
+  // });
+  return Event.find({ $or: [{ description: regex }, { title: regex }, { address: regex }] })// .populate({ path: 'attendees' }).populate({ path: 'host', select: 'name' })
+    // eslint-disable-next-line quotes
+    // eslint-disable-next-line quote-props
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    });
+};
+
+export const getEvent = (req, res) => {
+  const { id } = req.params;
+  // <<<<<<< HEAD
+  return Event.findById(id).populate({
+    path: 'comments',
+    model: 'Comment',
+    populate: { path: 'author', model: 'User' },
+  }).populate({ path: 'attendees' })
+  // =======
+  //   return Event.findById(id).populate('attendees')
+  // >>>>>>> origin/master
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
@@ -33,8 +65,16 @@ export const createEvent = (req, res) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     address: req.body.address,
-    eventCreator: req.user.name,
-    eventCreatorPhoto: req.user.photo,
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
+    // eventCreator: req.user.name,
+    // eventCreatorPhoto: req.user.photo,
+    host: req.user.id,
+    stripeId: req.body.stripeId,
+  });
+  User.findById(req.user.id, (err, user) => {
+    user.eventsHosted.push(event);
+    user.save();
   });
   return event.save()
     .then((result) => {
@@ -69,7 +109,6 @@ export const updateEvent = (req, res) => {
 export const rateEvent = (req, res) => {
   const eventId = req.params.id;
   const { rating } = req.body;
-  if (rating > 5 || rating < 0) { return res.status(499).json({ error: 'rating not valid' }); }
   return Event.findOne({ _id: eventId }).then((event) => {
     event.sumOfRating += parseInt(rating, 10);
     event.numberOfRatings += 1;
@@ -79,14 +118,66 @@ export const rateEvent = (req, res) => {
   });
 };
 
+export const attendEvent = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.eventsAttended.push(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  Event.findByIdAndUpdate(id, { $push: { attendees: req.user.id } }, { new: true }).populate('attendees').populate('comments')
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const leaveEvent = (req, res) => {
+  const { id } = req.params;
+  User.findById(req.user.id, (err, user) => {
+    user.eventsAttended.pull(id);
+    user.save();
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+  Event.findByIdAndUpdate(id, { $pull: { attendees: req.user.id } }, { new: true }).populate('attendees').populate('comments')
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 export const payment = (req, res) => {
-  console.log(req.body);
   return stripe.charges
     .create({
       amount: req.body.amount, // Unit: cents
       currency: 'USD',
       source: req.body.source,
       description: req.body.description,
+    }, {
+      stripe_account: req.body.stripeId,
     })
     .then((result) => { return res.status(200).json(result); });
+};
+
+
+export const stripeAccount = (req, res) => {
+  return axios.post('https://connect.stripe.com/oauth/token',
+    {
+      client_secret: stripe_secret_key,
+      code: req.body.code,
+      grant_type: 'authorization_code',
+    })
+    .then((result) => {
+      return res.send(result.data);
+    })
+    .catch((error) => {
+      res.status(500).json('error');
+      console.log(error.data);
+    });
 };
