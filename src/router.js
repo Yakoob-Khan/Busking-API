@@ -24,7 +24,7 @@ router.route('/payment')
   .post(Events.payment);
 
 router.route('/search/event')
-  .get((req, res) => {
+  .put((req, res) => {
     Events.searchEvents(req, res);
   });
 router.route('/stripeAccount')
