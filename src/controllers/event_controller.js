@@ -126,10 +126,11 @@ export const attendEvent = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
-  Event.findByIdAndUpdate(id, { $push: { attendees: req.user.id } }, { new: true }).populate('attendees')
+  Event.findByIdAndUpdate(id, { $push: { attendees: req.user.id } }, { new: true }).populate('attendees').populate('comments')
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
@@ -142,10 +143,11 @@ export const leaveEvent = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
-  Event.findByIdAndUpdate(id, { $pull: { attendees: req.user.id } }, { new: true }).populate('attendees')
+  Event.findByIdAndUpdate(id, { $pull: { attendees: req.user.id } }, { new: true }).populate('attendees').populate('comments')
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
