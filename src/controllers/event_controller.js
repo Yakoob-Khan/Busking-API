@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import Event from '../models/event';
 import User from '../models/users';
 
@@ -10,6 +11,22 @@ export const getEvents = (req, res) => {
       res.json(result);
     }).catch((error) => {
       res.status(500).json({ error });
+    });
+};
+
+// User.find({$or:[{region: "NA"},{sector:"Some Sector"}]}
+
+export const searchEvents = (req, res) => {
+  console.log('hello');
+  const regex = new RegExp(req.body.search, 'i'); // 'i' makes it case insensitive
+  // return Questions.find({ text: regex }, (err, q) => {
+  // return res.send(q);
+  // });
+  return Event.find({ $or: [{ description: regex }, { title: regex }, { address: regex }] }).populate({ path: 'attendees' }).populate({ path: 'host', select: 'name' })
+    // eslint-disable-next-line quotes
+    // eslint-disable-next-line quote-props
+    .then((result) => {
+      res.json(result);
     });
 };
 
