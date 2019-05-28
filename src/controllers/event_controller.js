@@ -21,11 +21,12 @@ export const getEvents = (req, res) => {
 
 export const searchEvents = (req, res) => {
   console.log('hello');
-  const regex = new RegExp(req.body.search, 'i'); // 'i' makes it case insensitive
+  console.log(req.body);
+  const regex = new RegExp(req.body.searchTerm, 'i'); // 'i' makes it case insensitive
   // return Questions.find({ text: regex }, (err, q) => {
   // return res.send(q);
   // });
-  return Event.find({ $or: [{ description: regex }, { title: regex }, { address: regex }] }).populate({ path: 'attendees' }).populate({ path: 'host', select: 'name' })
+  return Event.find({ $or: [{ description: regex }, { title: regex }, { address: regex }] })// .populate({ path: 'attendees' }).populate({ path: 'host', select: 'name' })
     // eslint-disable-next-line quotes
     // eslint-disable-next-line quote-props
     .then((result) => {
