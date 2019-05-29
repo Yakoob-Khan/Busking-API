@@ -18,6 +18,7 @@
     "yarn": "^1.6.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.464.0",
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -25,6 +26,7 @@
     "cookie-parser": "^1.4.4",
     "cookie-signature": "^1.1.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-generator": "^4.16.1",

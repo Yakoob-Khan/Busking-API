@@ -3,6 +3,7 @@ import * as Events from './controllers/event_controller';
 import * as Users from './controllers/user_controller';
 import * as Comments from './controllers/comment_controller';
 import { requireAuth } from './passport';
+import signS3 from './services/s3';
 
 const router = Router();
 
@@ -101,5 +102,8 @@ router.route('/events/attend/:id')
 
 router.route('/events/leave/:id')
   .get(requireAuth, (req, res) => { return Events.leaveEvent(req, res); });
+
+router.get('/sign-s3', signS3);
+
 
 export default router;
