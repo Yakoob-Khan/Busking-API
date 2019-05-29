@@ -107,10 +107,12 @@ export const followUser = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
-  User.findByIdAndUpdate(id, { $push: { followers: req.user.id } }, { new: true }).populate('followers')
+  User.findByIdAndUpdate(id, { $push: { followers: req.user.id } }, { new: true }).populate('followers').populate('following').populate('eventsHosted')
+    .populate('eventsAttended')
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
@@ -123,10 +125,12 @@ export const unFollowUser = (req, res) => {
   }).catch((error) => {
     res.status(500).json({ error });
   });
-  User.findByIdAndUpdate(id, { $pull: { followers: req.user.id } }, { new: true }).populate('followers')
+  User.findByIdAndUpdate(id, { $pull: { followers: req.user.id } }, { new: true }).populate('followers').populate('following').populate('eventsHosted')
+    .populate('eventsAttended')
     .then((result) => {
       res.json(result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       res.status(500).json({ error });
     });
 };
