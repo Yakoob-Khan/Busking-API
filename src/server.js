@@ -5,10 +5,12 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import apiRouter from './router';
 import authRouter from './auth_routes';
 import passport, { requireAuth } from './passport';
 
+dotenv.config({ silent: true });
 
 // DB Setup
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/busking';
