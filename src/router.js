@@ -14,12 +14,6 @@ router.get('/', (req, res) => {
 router.route('/events')
   .post(requireAuth, (req, res) => { return Events.createEvent(req, res); })
   .get(Events.getEvents);
-// .get((req, res) => {
-//   Events.getEvents(req, res);
-// })
-// .delete((req, res) => {
-//   Events.deleteEvent(req, res);
-// });
 
 router.route('/payment')
   .post(Events.payment);
@@ -44,14 +38,6 @@ router.route('/events/:id')
   .delete((req, res) => {
     Events.deleteEvent(req, res);
   });
-
-
-// router.get('/events/search', (req, res) => {
-//   console.log('hello');
-//   Events.searchEvents(req, res).then((result) => {
-//     res.send(result);
-//   });
-// });
 
 router.route('/users')
   .get((req, res) => {
@@ -86,14 +72,6 @@ router.post('/events/rate/:id', (req, res) => {
     res.send(result);
   });
 });
-
-
-// router.get(requireAuth, '/comment/:id', (req, res) => {
-//   Comments.writeComment(req, res);
-// });
-// router.get('/comment', (req, res) => {
-//   res.send('hey');
-// });
 
 router.route('/comment/:id')
   .post(requireAuth, (req, res) => { return Comments.writeComment(req, res); });

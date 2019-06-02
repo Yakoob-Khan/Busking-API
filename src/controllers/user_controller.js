@@ -2,13 +2,10 @@
 /* eslint-disable consistent-return */
 import User from '../models/users';
 
-
 export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
   return User.findOne({
     'facebookProvider.id': profile.id,
   }, (err, user) => {
-    // console.log(user);
-    // console.log(profile);
     // no user was found, lets create a new one
     if (!user) {
       const newUser = new User({
@@ -40,7 +37,6 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
     }
   });
 };
-// =======
 
 export const getUsers = (req, res) => {
   return User.find({})
