@@ -36,15 +36,11 @@ export const searchEvents = (req, res) => {
 
 export const getEvent = (req, res) => {
   const { id } = req.params;
-  // <<<<<<< HEAD
   return Event.findById(id).populate({
     path: 'comments',
     model: 'Comment',
     populate: { path: 'author', model: 'User' },
   }).populate({ path: 'attendees' })
-  // =======
-  //   return Event.findById(id).populate('attendees')
-  // >>>>>>> origin/master
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -67,8 +63,6 @@ export const createEvent = (req, res) => {
     address: req.body.address,
     startTime: req.body.startTime,
     endTime: req.body.endTime,
-    // eventCreator: req.user.name,
-    // eventCreatorPhoto: req.user.photo,
     host: req.user.id,
     stripeId: req.body.stripeId,
   });
