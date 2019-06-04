@@ -1,5 +1,6 @@
 # Busking API (Backend)
 
+
 ![Team](assets/team.jpg)
 
 A decentralized platform that empowers street performers to publicize their musical events. This democratizes information so that more people can support up-and-coming artists in their region.
@@ -27,11 +28,10 @@ A decentralized platform that empowers street performers to publicize their musi
 - **AMAZON S3**
 	- we enabled amazon S3 so that users can seemlessly upload their images when creating events. This makes more sense from a user-flow perspective than having them upload a link.
 
-
 ## Setup
 
 Clone both the front-end and back-end and run `yarn` to install all the project dependencies. Make sure you have a mongo process running in another terminal in the background with `mongod &`. Then run `yarn start` in the front-end, `yarn-dev` in the backend, to load the project locally. 
-Make sure you have the `.env` file placed in the **root** directory of the project so that you have access to the required environment variables for the backend to work.
+Make sure you have the `.env` file placed in the **root** directory of the project so that you have access to the required environment variables for the backend to work. Ma
 
 ## Deployment
 
