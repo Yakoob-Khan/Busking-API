@@ -64,10 +64,8 @@ app.use('/auth', authRouter);
 // default index route
 app.get('/', requireAuth, (req, res) => {
   if (req.user) {
-    console.log(req.user);
     res.send(req.user);
   } else {
-    console.log('no req user saved');
     res.send('no req user saved');
   }
 });

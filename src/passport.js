@@ -43,13 +43,10 @@ passport.use(jwtLogin);
 passport.use(FacebookLogin);
 
 passport.serializeUser((user, done) => {
-  console.log('serializing');
-  console.log(user._id);
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('Inside deserializeUser callback');
   done(null, user);
 });
 

@@ -20,8 +20,6 @@ export const getEvents = (req, res) => {
 // User.find({$or:[{region: "NA"},{sector:"Some Sector"}]}
 
 export const searchEvents = (req, res) => {
-  console.log('hello');
-  console.log(req.body);
   const regex = new RegExp(req.body.searchTerm, 'i'); // 'i' makes it case insensitive
   // return Questions.find({ text: regex }, (err, q) => {
   // return res.send(q);
@@ -42,7 +40,6 @@ export const getEvent = (req, res) => {
     populate: { path: 'author', model: 'User' },
   }).populate({ path: 'attendees' })
     .then((result) => {
-      console.log(result);
       res.json(result);
     })
     .catch((error) => {

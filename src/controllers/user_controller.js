@@ -32,7 +32,6 @@ export const upsertFbUser = (accessToken, refreshToken, profile, cb) => {
         return cb(error, savedUser);
       });
     } else {
-      console.log('yes user');
       return cb(err, user);
     }
   });
@@ -85,7 +84,6 @@ export const deleteUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
-  console.log(req.body);
   const { id } = req.params;
   return User.findByIdAndUpdate(id, { $set: req.body }, { new: true })
     .then((result) => {
