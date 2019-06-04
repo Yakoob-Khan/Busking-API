@@ -30,8 +30,9 @@ A decentralized platform that empowers street performers to publicize their musi
 
 ## Setup
 
-Clone both the front-end and back-end and run `yarn` to install all the project dependencies. Make sure you have a mongo process running in another terminal in the background with `mongod &`. Then run `yarn start` in the front-end, `yarn-dev` in the backend, to load the project locally. 
-Make sure you have the `.env` file placed in the **root** directory of the project so that you have access to the required environment variables for the backend to work. Ma
+Clone both the front-end and back-end and run `yarn` to install all the project dependencies. Make sure you have a mongo process running in another terminal in the background with `mongod &`.
+Make sure you have the `.env` file placed in the **root** directory of the project so that you have access to the required environment variables for the backend to work. Make sure that you have the `config.js` file in the `src` directory so that fb authentication works. Then run `yarn start` in the front-end, `yarn-dev` in the backend, to load the project locally. 
+
 
 ## Deployment
 
